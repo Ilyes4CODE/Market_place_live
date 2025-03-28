@@ -75,8 +75,8 @@ def register_market_user(request):
     if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
         return Response({"error": "تنسيق البريد الإلكتروني غير صالح."}, status=status.HTTP_400_BAD_REQUEST)
 
-    if len(password) != 6:
-        return Response({"error": "يجب أن تتكون كلمة المرور من 6 أحرف بالضبط."}, status=status.HTTP_400_BAD_REQUEST)
+    if len(password) < 6:
+        return Response({"error": "يجب أن تحتوي كلمة المرور على الاقل 6 أحرف"}, status=status.HTTP_400_BAD_REQUEST)
     if MarketUser.objects.filter(phone=phone).exists():
         return Response({"error": "رقم الهاتف مسجل بالفعل."}, status=status.HTTP_302_FOUND)
     if MarketUser.objects.filter(email=email).exists():

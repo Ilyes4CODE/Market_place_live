@@ -1,1 +1,1 @@
-web: gunicorn MarketPlace.asgi:application -k uvicorn.workers.UvicornWorker --log-file -
+web: daphne -b 0.0.0.0 -p $PORT MarketPlace.asgi:application

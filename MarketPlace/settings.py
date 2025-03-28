@@ -164,7 +164,10 @@ TEMPLATES = [
 
 # WSGI_APPLICATION = 'MarketPlace.wsgi.application'
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://sury-tadz-995084b2d3c5.herokuapp.com',
+    'wss://sury-tadz-995084b2d3c5.herokuapp.com',
+]
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

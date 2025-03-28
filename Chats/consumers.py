@@ -82,7 +82,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "sender": msg.sender.profile.pk,
                 "content": msg.content,
                 "timestamp": msg.timestamp.isoformat(),
-                "picture": f"https://marketplace-4m56.onrender.com{msg.picture.url}" if msg.picture else None  # Check if picture exists
+                "picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com{msg.picture.url}" if msg.picture else None  # Check if picture exists
             }
             for msg in messages
         ]
@@ -96,7 +96,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             return {
                 "id": receiver.profile.pk,
                 "name": receiver.name,
-                "profile_picture": f"https://marketplace-4m56.onrender.com{receiver.profile_picture.url}" if receiver.profile_picture else None
+                "profile_picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com{receiver.profile_picture.url}" if receiver.profile_picture else None
             }
         except Conversation.DoesNotExist:
             return {"error": "Conversation not found"}
@@ -131,13 +131,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         sender_data = await database_sync_to_async(lambda: {
             "id": sender_marketuser.profile.pk,
             "username": sender_marketuser.name,
-            "profile_picture": f"https://marketplace-4m56.onrender.com{sender_marketuser.profile_picture.url}" if sender_marketuser.profile_picture else None
+            "profile_picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com{sender_marketuser.profile_picture.url}" if sender_marketuser.profile_picture else None
         })()
 
         recipient_data = await database_sync_to_async(lambda: {
             "id": recipient_marketuser.profile.pk,
             "username": recipient_marketuser.name,
-            "profile_picture": f"https://marketplace-4m56.onrender.com{recipient_marketuser.profile_picture.url}" if recipient_marketuser.profile_picture else None
+            "profile_picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com{recipient_marketuser.profile_picture.url}" if recipient_marketuser.profile_picture else None
         })()
 
         # ✅ Ensure recipient profile exists
@@ -160,7 +160,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "message": message_text,
                     "sender": sender_data,
                     "recipient": recipient_data,
-                    "picture": f"https://marketplace-4m56.onrender.com{message.picture.url}" if message.picture else None,  # ✅ Correct URL
+                    "picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com{message.picture.url}" if message.picture else None,  # ✅ Correct URL
                     "timestamp": str(message.timestamp),
                 },
             )

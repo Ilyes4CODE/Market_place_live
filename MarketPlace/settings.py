@@ -87,13 +87,6 @@ CHANNEL_LAYERS = {
     },
 }
 INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dygemxovp',
-    'API_KEY': '575943322267188',
-    'API_SECRET': 'so1n4iKbDneKcJyXvABISTqoqPA',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=90),
@@ -225,10 +218,23 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URL = ''
-MEDIA_ROOT = os.path.join(BASE_DIR,'upload/')
-INSTALLED_APPS.insert(1, "whitenoise.runserver_nostatic")
 
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dygemxovp',
+    'API_KEY': '575943322267188',
+    'API_SECRET': 'so1n4iKbDneKcJyXvABISTqoqPA',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Remove local media settings
+# MEDIA_URL and MEDIA_ROOT are not needed when using Cloudinary
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Middleware
+INSTALLED_APPS.insert(1, "whitenoise.runserver_nostatic")
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

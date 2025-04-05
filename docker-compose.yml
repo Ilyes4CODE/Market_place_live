@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000  # Bind to all network interfaces
     volumes:
-      - .:/app
+      - .:/code
     ports:
-      - "8000:8000"
+      - "80:80"
     env_file:
       - .env

@@ -17,6 +17,7 @@ urlpatterns = [
     path('listings/buyer/', views.get_buyer_purchases, name='buyer_purchases'),
     # path('History/',views.seller_products_history),
     path('Create_Category/',views.create_category),
+    path('Update_Category/<int:category_id>/',views.update_category),
     path('Get_All_Categories/',views.get_all_categories),
     path('Get_All_Products/',views.admin_list_products),
     path('History/',views.user_products_and_bids),

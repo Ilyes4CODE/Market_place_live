@@ -70,6 +70,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'Tickets.exceptions.custom_exception_handler',
 }
 
 # CHANNEL_LAYERS = {
@@ -185,7 +186,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://api.surytadz.com",
+]
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

@@ -1001,6 +1001,26 @@ def create_category(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+@admin_required
+def update_category(request, category_id):
+    """
+    تحديث تصنيف موجود (بما في ذلك الصورة)
+    """
+    try:
+        category = Category.objects.get(id=category_id)
+    except Category.DoesNotExist:
+        return Response({"error": "⚠️ التصنيف غير موجود."}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CategorySerializer(category, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
 # 📌 Get all categories
 @swagger_auto_schema(
     method='get',
@@ -1058,6 +1078,8 @@ class CustomPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 100  # Limit max items per page
 
+from collections import defaultdict
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @verified_user_required
@@ -1090,12 +1112,22 @@ def user_products_and_bids(request):
 
     # Serialize products
     products_serializer = ProductSerializer(paginated_products, many=True)
-    
-    # Modify the product response to match your required format
+
+    # Serialize user bids
+    user_bids = Bid.objects.filter(buyer=user)
+    bids_serializer = BidSerializer(user_bids, many=True)
+
+    # Group user bids by product ID
+    bids_by_product_id = defaultdict(list)
+    for bid in bids_serializer.data:
+        bids_by_product_id[bid["product"]].append(bid)
+
+    # Format products and attach bids
     formatted_products = []
     for product in products_serializer.data:
+        product_id = product["id"]
         formatted_products.append({
-            **product,  # Keep original fields
+            **product,
             "seller": {
                 "id": product["seller"],
                 "name": product["seller_name"],
@@ -1106,16 +1138,13 @@ def user_products_and_bids(request):
                 "id": product["category"] if product["category"] else None,
                 "name": "No Category" if product["category"] is None else product["category"]
             },
+            "bids": bids_by_product_id.get(product_id, [])  # Attach user's bids for this product
         })
 
-    # Get user bids
-    user_bids = Bid.objects.filter(buyer=user)
-    bids_serializer = BidSerializer(user_bids, many=True)
-
     return paginator.get_paginated_response({
-        'user_products': formatted_products,
-        'bids': bids_serializer.data,
+        'user_products': formatted_products
     })
+
 
 
 

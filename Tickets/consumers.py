@@ -78,7 +78,7 @@ class TicketChatConsumer(AsyncWebsocketConsumer):
                         "sender_id": self.user.id,
                         "sender_name": user_data["name"],
                         "sender_picture": user_data["picture"],
-                        "picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com/{message.image}" if message.image else None,
+                        "picture": f"https://api.surytadz.com/{message.image}" if message.image else None,
                     }
                 }
             )
@@ -148,7 +148,7 @@ class TicketChatConsumer(AsyncWebsocketConsumer):
                 "sender_id": msg.sender.profile.pk,
                 "sender": msg.sender.name,
                 "sender_picture": msg.sender.profile_picture.url if msg.sender.profile_picture else None,
-                "picture": f"https://sury-tadz-995084b2d3c5.herokuapp.com/{msg.image}" if msg.image else None,
+                "picture": f"https://api.surytadz.com/{msg.image}" if msg.image else None,
             }
             for msg in messages
         ]

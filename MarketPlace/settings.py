@@ -173,18 +173,18 @@ CSRF_TRUSTED_ORIGINS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / os.getenv("DATABASE_NAME", "db.sqlite3"),
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb',
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',
-        'HOST': '172.31.35.226',  # Replace with your server's IP address
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / os.getenv("DATABASE_NAME", "db.sqlite3"),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'mydb',
+    #     'USER': 'myuser',
+    #     'PASSWORD': 'mypassword',
+    #     'HOST': '172.31.35.226',  # Replace with your server's IP address
+    #     'PORT': '5432',
+    # }
 }
 CSRF_TRUSTED_ORIGINS = [
     "https://api.surytadz.com",
